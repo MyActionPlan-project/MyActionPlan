@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const stepSchema = newSchema(
+const stepSchema = new Schema(
   {
     action: {
       type: String,
@@ -21,7 +21,9 @@ const stepSchema = newSchema(
     actionplan: {
       type: Schema.Types.ObjectId,
       ref: 'Actionplan'
-    },
+    }
+  },
+  {
     timestamps: true
   }
 )

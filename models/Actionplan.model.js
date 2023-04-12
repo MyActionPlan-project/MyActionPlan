@@ -13,23 +13,25 @@ const actionplanSchema = new Schema(
       date: {
         type: Date
     },
-      userId: {
+      userId: [{
         required: true,
         type: Schema.Types.ObjectId,
         ref: "User"
-    },
+    }],
       location: {
         type: String
     },
       image: {
         type: String
     },
-     steps: { 
+     steps: [{ 
       type: Schema.Types.ObjectId,
       ref: 'Step',
       required: true
-    },
-     timestamps: true,
+    }]    
+  },
+  {
+    timestamps: true,
   }
 )
 
