@@ -18,7 +18,7 @@ const stepSchema = new Schema(
       type: String,
       required: false,
     },
-    actionplan: {
+    actionplanId: {
       type: Schema.Types.ObjectId,
       ref: 'Actionplan'
     }
