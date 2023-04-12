@@ -18,6 +18,8 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+console.log("random consolelog");
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
