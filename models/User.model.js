@@ -20,10 +20,10 @@ const userSchema = new Schema(
       required: [true, "Name is required."],
     },
     age: {
-      type: Number,
+      type: Date,
     },
     telephoneNumber: {
-      type: Number
+      type: String
     },
     city: {
       type: String

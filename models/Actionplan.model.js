@@ -6,18 +6,24 @@ const actionplanSchema = new Schema(
       type: String,
       required: [true, "Title is required."],
     },
+    catagory: {
+      type: String,
+      enum: ["DIY", "Vacation", "Event","Training","Other"],
+      default: "Other",
+      required: [true, "Catagory is required."]
+    },
       description:{
         type: String,
         required: [true, "Description is required."]
     },
-      date: {
+      deadline: {
         type: Date
     },
-      userId: [{
+      userId: {
         required: true,
         type: Schema.Types.ObjectId,
         ref: "User"
-    }],
+    },
       location: {
         type: String
     },

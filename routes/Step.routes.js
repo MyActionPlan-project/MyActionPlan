@@ -8,16 +8,18 @@ router.post("/actionplans/:actionplanId/steps", (req,res,next)=>{
     const {
         action,
         comment,
-        date,
+        deadline,
         location,
+        status,
         actionplanId
     }= req.body
 
     const newStep = {
         action,
         comment,
-        date,
+        deadline,
         location,
+        status,
         actionplanId
     }
 

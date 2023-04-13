@@ -7,17 +7,19 @@ const Step = require("../models/Step.model")
 router.post("/actionplans", (req,res,next)=>{
     const {
         title,
+        catagory,
         description,
-        date,
+        deadline,
         userId,
         location,
         image,
      } = req.body;
 
     Actionplan.create({
-        title, 
+        title,
+        catagory, 
         description, 
-        date,
+        deadline,
         userId,
         location,
         image,
@@ -77,7 +79,7 @@ router.put("/actionplans/:actionplanId", (req,res,next)=>{
         res.status(400).json({message: "specified id is not valid"})
         return
     }
-    
+
     Actionplan.findByIdAndUpdate(actionplanId, req.body,{new: true})
     .then((updatedActionplan) => res.json(updatedActionplan))
     .catch(err => {

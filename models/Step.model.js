@@ -10,13 +10,18 @@ const stepSchema = new Schema(
       type: String, //textarea
       required: false
     },
-    date: {
+    deadline: {
       type: Date,
       required: false,
     },
     location: {
       type: String,
       required: false,
+    },
+    status: {
+      type: String,
+      enum: ["Completed", "Pending","Unfinished"],
+      required: true
     },
     actionplanId: {
       type: Schema.Types.ObjectId,
