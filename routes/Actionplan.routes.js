@@ -15,8 +15,7 @@ router.post("/actionplans", isAuthenticated, (req,res,next)=>{
         image,
      } = req.body;
 
-     console.log("HEEEEEEEEEE", req.payload._id);
-     console.log(req.body)
+     
     Actionplan.create({
         title,
         category, 
@@ -29,6 +28,7 @@ router.post("/actionplans", isAuthenticated, (req,res,next)=>{
     })
     .then(response => res.status(201).json(response))
     .catch(err => {
+        res.send(err)
         console.log("error creating a new actionplan", err);
         res.status(500).json({
             message: "error creating a new actionplan",
