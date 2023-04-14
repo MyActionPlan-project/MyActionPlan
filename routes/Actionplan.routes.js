@@ -2,28 +2,31 @@ const router = require ("express").Router()
 const mongoose = require ("mongoose")
 const Actionplan = require("../models/Actionplan.model")
 const Step = require("../models/Step.model")
+const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
 // post/api/actionplans
-router.post("/actionplans", (req,res,next)=>{
+router.post("/actionplans", isAuthenticated, (req,res,next)=>{
     const {
         title,
-        catagory,
+        category,
         description,
         deadline,
-        userId,
+        
         location,
         image,
      } = req.body;
 
+     console.log("HEEEEEEEEEE", req.payload._id);
+     console.log(req.body)
     Actionplan.create({
         title,
-        catagory, 
+        category, 
         description, 
-        deadline,
-        userId,
+        deadline: new Date(deadline),
         location,
         image,
-        steps:[]
+        steps:[],
+        userId: req.payload._id
     })
     .then(response => res.status(201).json(response))
     .catch(err => {
@@ -36,7 +39,7 @@ router.post("/actionplans", (req,res,next)=>{
 })
 
 // get/api/actionplans
-router.get("/actionplans", (req,res,next)=>{
+router.get("/actionplans", isAuthenticated, (req,res,next)=>{
     Actionplan.find()
     .populate("steps")
     .then(actionplansfromDB=>{
@@ -52,7 +55,7 @@ router.get("/actionplans", (req,res,next)=>{
 })
 
 // get/api/actionplans/:actionplanId
-router.get("/actionplans/:actionplanId", (req,res,next)=>{
+router.get("/actionplans/:actionplanId", isAuthenticated, (req,res,next)=>{
     const {actionplanId} = req.params
 
     if(!mongoose.Types.ObjectId.isValid(actionplanId)){
@@ -72,7 +75,7 @@ router.get("/actionplans/:actionplanId", (req,res,next)=>{
 })
 
 //put/api/actionplans/:actionplanId
-router.put("/actionplans/:actionplanId", (req,res,next)=>{
+router.put("/actionplans/:actionplanId", isAuthenticated, (req,res,next)=>{
     const {actionplanId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(actionplanId)){
@@ -92,7 +95,7 @@ router.put("/actionplans/:actionplanId", (req,res,next)=>{
 })
 
 //delete/api/actionplans/:actionplanId
-router.delete("/actionplans/:actionplanId", (req,res,next)=>{
+router.delete("/actionplans/:actionplanId", isAuthenticated, (req,res,next)=>{
     const {actionplanId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(actionplanId)){
