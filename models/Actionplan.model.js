@@ -9,7 +9,6 @@ const actionplanSchema = new Schema(
     category: {
       type: String,
       enum: ["DIY", "Vacation", "Event","Training","Other"],
-      default: "",
       required: [true, "category is required."]
     },
       description:{
