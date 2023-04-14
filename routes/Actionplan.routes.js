@@ -9,8 +9,7 @@ router.post("/actionplans", (req,res,next)=>{
         title,
         catagory,
         description,
-        deadline,
-        userId,
+        deadline, 
         location,
         image,
      } = req.body;
@@ -20,7 +19,7 @@ router.post("/actionplans", (req,res,next)=>{
         catagory, 
         description, 
         deadline,
-        userId,
+        userId: req.payload._id,
         location,
         image,
         steps:[]
