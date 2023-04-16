@@ -28,7 +28,6 @@ router.post("/actionplans", isAuthenticated, (req,res,next)=>{
     })
     .then(response => res.status(201).json(response))
     .catch(err => {
-        res.send(err)
         console.log("error creating a new actionplan", err);
         res.status(500).json({
             message: "error creating a new actionplan",

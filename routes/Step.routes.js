@@ -37,6 +37,24 @@ Step.create(newStep)
         })
 });
 
+//get/api/actionplans/:actionplanId/:stepId
+router.get("/actionplans/:actionplanId/:stepId", (req,res,next)=>{
+    const {stepId}= req.params;
+
+    Step.findById(stepId)
+    .then(stepfromDB=>{
+        console.log(stepfromDB)
+        res.json(stepfromDB)
+    })
+    .catch(err => {
+        console.log("error displaying list of actionplans", err);
+        res.status(500).json({
+            message: "error displaying list of actionplans",
+            error: err
+        });
+    })
+})
+
 //put/api/actionplans/:actionplanId/steps/:stepId
 router.put("/actionplans/:actionplanId/steps/:stepId", (req,res,next)=>{
     const {stepId}= req.params;
