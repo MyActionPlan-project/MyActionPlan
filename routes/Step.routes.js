@@ -55,8 +55,8 @@ router.get("/actionplans/:actionplanId/:stepId", (req,res,next)=>{
     })
 })
 
-//put/api/actionplans/:actionplanId/steps/:stepId
-router.put("/actionplans/:actionplanId/steps/:stepId", (req,res,next)=>{
+//put/api/actionplans/:actionplanId/:stepId
+router.put("/actionplans/:actionplanId/:stepId", (req,res,next)=>{
     const {stepId}= req.params;
 
     if(!mongoose.Types.ObjectId.isValid(stepId)){
@@ -76,11 +76,12 @@ router.put("/actionplans/:actionplanId/steps/:stepId", (req,res,next)=>{
 
 })
 
-//delete/api/actionplans/:actionplanId/steps/:stepId
-router.delete("/actionplans/:actionplanId/steps/:stepId", (req,res,next)=>{
+//delete/api/actionplans/:actionplanId/:stepId
+router.delete("/actionplans/:actionplanId/:stepId", (req,res,next)=>{
     const {stepId} = req.params;
+    
 
-    if(!mongoose.Types.ObjectId.isValid(sttepId)){
+    if(!mongoose.Types.ObjectId.isValid(stepId)){
         res.status(400).json({message: "specified id is not valid"})
         return
     }
@@ -88,9 +89,9 @@ router.delete("/actionplans/:actionplanId/steps/:stepId", (req,res,next)=>{
     Step.findByIdAndDelete(stepId)
     .then(()=>res.json({message: `Actionplan with ${stepId} is deleted`}))
     .catch(err => {
-        console.log("error deleting actionplan", err);
+        console.log("error deleting step", err);
         res.status(500).json({
-            message: "error deleting actionplan",
+            message: "error deleting step",
             error: err
         });
     })

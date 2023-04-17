@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const isAuthenticated = require('../middleware/isAuthenticated');
-const User = require('../models/User');
+const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const User = require('../models/User.model');
 const mongoose = require('mongoose');
 
 
 // Get user details
-router.get("/profile/:userId", authMiddleware, (req, res) => {
-  User.findById(req.params.userId).select('-password')
+router.get("/profile/:userId", isAuthenticated, (req, res) => {
+  console.log("req.params", req.params)
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -21,7 +22,7 @@ router.get("/profile/:userId", authMiddleware, (req, res) => {
 });
 
 //Update user details
-router.put("/profile/:userId", authMiddleware, (req, res) => {
+router.put("/profile/:userId", isAuthenticated, (req, res) => {
   const userId = req.params.userId;
   const updatedUser = req.body;
     User.findByIdAndUpdate(userId, updatedUser, {new: true})
@@ -35,7 +36,7 @@ router.put("/profile/:userId", authMiddleware, (req, res) => {
 });
 
 //Delete user 
-router.delete("/profile/:userId", authMiddleware, (req, res) => {
+router.delete("/profile/:userId", isAuthenticated, (req, res) => {
   const userId = req.params.userId;
     User.findByIdAndDelete(userId)
       .then(() => {
