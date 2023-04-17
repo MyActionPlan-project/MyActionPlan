@@ -41,6 +41,8 @@ router.delete("/profile/:userId", isAuthenticated, (req, res) => {
   const userId = req.params.userId;
   User.findByIdAndDelete(userId)
     .then(() => {
+      console.log(`User ${userId} has been deleted successfully`);
+      res.clearCookie("token");
       return res.status(204).send();
     })
     .catch((err) => {
