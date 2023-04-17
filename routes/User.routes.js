@@ -23,6 +23,7 @@ router.get("/profile/:userId", isAuthenticated, (req, res) => {
 
 //Update user details
 router.put("/profile/:userId", isAuthenticated, (req, res) => {
+  
   const userId = req.params.userId;
   const updatedUser = req.body;
   User.findByIdAndUpdate(userId, updatedUser, { new: true })
@@ -48,31 +49,6 @@ router.delete("/profile/:userId", isAuthenticated, (req, res) => {
     });
 });
 
-//Update user details
-router.put("/profile/:userId", isAuthenticated,  (req, res) => {
-  const userId = req.params.userId;
-  const updatedUser = req.body;
-    User.findByIdAndUpdate(userId, updatedUser, {new: true})
-      .then((updatedUser) => {
-        res.status(200).json({user: updatedUser});
-      })
-      .catch((err) => {
-        console.log(`error updating user: ${err.message}`);
-        res.status(500).json( {error: err.message });
-     
-      });
-});
 
-//Delete user 
-router.delete("/profile/:userId", isAuthenticated,  (req, res) => {
-  const userId = req.params.userId;
-    User.findByIdAndDelete(userId)
-      .then(() => {
-        res.status(204).send();
-      })
-      .catch((err) => {
-        console.log(`Error deleting user: ${err.message}`);
-      });
-  });
 
 module.exports = router;
