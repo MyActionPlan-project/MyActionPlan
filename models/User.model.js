@@ -20,7 +20,7 @@ const userSchema = new Schema(
       required: [true, "Name is required."],
     },
     age: {
-      type: Date,
+      type: Number,
     },
     telephoneNumber: {
       type: String

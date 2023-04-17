@@ -1,27 +1,55 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const isAuthenticated = require('../middleware/isAuthenticated');
-const User = require('../models/User');
-const mongoose = require('mongoose');
+const User = require("../models/User.model");
+const mongoose = require("mongoose");
+const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+
 
 
 // Get user details
-router.get("/profile/:userId", authMiddleware, (req, res) => {
-  User.findById(req.params.userId).select('-password')
+router.get("/profile/:userId", isAuthenticated, (req, res) => {
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
-      res.json({ user });
+      return res.status(200).json({ user });
     })
     .catch((err) => {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).json({ error: 'Server Error' });
     });
 });
 
 //Update user details
-router.put("/profile/:userId", authMiddleware, (req, res) => {
+router.put("/profile/:userId", isAuthenticated, (req, res) => {
+  const userId = req.params.userId;
+  const updatedUser = req.body;
+  User.findByIdAndUpdate(userId, updatedUser, { new: true })
+    .then((updatedUser) => {
+      return res.status(200).json({ user: updatedUser });
+    })
+    .catch((err) => {
+      console.log(`error updating user: ${err.message}`);
+      return res.status(500).json({ error: err.message });
+    });
+});
+
+//Delete user
+router.delete("/profile/:userId", isAuthenticated, (req, res) => {
+  const userId = req.params.userId;
+  User.findByIdAndDelete(userId)
+    .then(() => {
+      return res.status(204).send();
+    })
+    .catch((err) => {
+      console.log(`Error deleting user: ${err.message}`);
+      return res.status(500).json({ error: err.message });
+    });
+});
+
+//Update user details
+router.put("/profile/:userId", isAuthenticated,  (req, res) => {
   const userId = req.params.userId;
   const updatedUser = req.body;
     User.findByIdAndUpdate(userId, updatedUser, {new: true})
@@ -31,11 +59,12 @@ router.put("/profile/:userId", authMiddleware, (req, res) => {
       .catch((err) => {
         console.log(`error updating user: ${err.message}`);
         res.status(500).json( {error: err.message });
+     
       });
 });
 
 //Delete user 
-router.delete("/profile/:userId", authMiddleware, (req, res) => {
+router.delete("/profile/:userId", isAuthenticated,  (req, res) => {
   const userId = req.params.userId;
     User.findByIdAndDelete(userId)
       .then(() => {
