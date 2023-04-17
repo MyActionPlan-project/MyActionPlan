@@ -4,7 +4,7 @@ const Actionplan = require("../models/Actionplan.model")
 const Step = require("../models/Step.model")
 
 //post/api/actionplans/:actionplanId/steps
-router.post("/actionplans/:actionplanId/steps", (req,res,next)=>{
+router.post("/actionplans/:actionplanId", (req,res,next)=>{
     const {
         action,
         comment,
