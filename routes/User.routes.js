@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
-const User = require('../models/User.model');
+const User = require('../models/User.model.js');
 const mongoose = require('mongoose');
 
 

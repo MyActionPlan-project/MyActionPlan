@@ -1,7 +1,6 @@
 const router = require ("express").Router()
 const mongoose = require ("mongoose")
 const Actionplan = require("../models/Actionplan.model")
-const Step = require("../models/Step.model")
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
 // post/api/actionplans
